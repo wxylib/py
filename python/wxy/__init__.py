@@ -76,7 +76,7 @@ def regular(x, cell="centre", tolerance="float32"):
     return _wxy.regular(x, cell, tolerance)
 
 
-def warp(x, extent, crs, dst_extent, dst_dim, dst_crs, resample="near"):
+def warp(x, extent, crs, dst_extent, dst_dim, dst_crs, resample="near", error_threshold=0.125):
     """Warp a 2-d array from one grid and CRS to another.
 
     Parameters
@@ -96,6 +96,10 @@ def warp(x, extent, crs, dst_extent, dst_dim, dst_crs, resample="near"):
     dst_crs : str
         Target CRS.
     resample : {"near", "bilinear", "cubic", "lanczos"}
+    error_threshold : float
+        Maximum error, in target pixels, of the approximate transformer
+        (GDAL's default, 0.125). ``0`` transforms every pixel exactly:
+        slower, and the reference when comparing results.
 
     Returns
     -------
@@ -126,6 +130,7 @@ def warp(x, extent, crs, dst_extent, dst_dim, dst_crs, resample="near"):
         _floats(dst_dim),
         str(dst_crs),
         resample,
+        float(error_threshold),
     )
 
 

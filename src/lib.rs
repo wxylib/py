@@ -122,6 +122,8 @@ fn regular<'py>(
 /// Warp `x` (`nrow` x `ncol`, row 0 north) on `extent` in `crs` to a grid
 /// of `dst_dim` cells over `dst_extent` in `dst_crs`. Returns an
 /// `nrow` x `ncol` float64 array; cells nothing maps to are NaN.
+/// `error_threshold` is the approximate transformer's maximum error in
+/// pixels; `0` transforms every pixel exactly.
 #[pyfunction]
 #[allow(clippy::too_many_arguments)]
 fn warp<'py>(
@@ -133,6 +135,7 @@ fn warp<'py>(
     dst_dim: Vec<f64>,
     dst_crs: &str,
     resample: &str,
+    error_threshold: f64,
 ) -> PyResult<Bound<'py, PyArray2<f64>>> {
     let resampling = match resample {
         "near" => ResampleAlg::NearestNeighbour,
@@ -141,6 +144,9 @@ fn warp<'py>(
         "lanczos" => ResampleAlg::Lanczos,
         other => return Err(err(format!("unknown resampling '{other}'"))),
     };
+    if !(error_threshold.is_finite() && error_threshold >= 0.0) {
+        return Err(err("error_threshold must be a number >= 0"));
+    }
     let extent = extent4("extent", &extent)?;
     let dst_extent = extent4("dst_extent", &dst_extent)?;
     let dst_dim = dim2("dst_dim", &dst_dim)?;
@@ -168,6 +174,7 @@ fn warp<'py>(
     let dst = GridSpec::from_extent(dst_crs, dst_extent, dst_dim);
     let opts = WarpOptions {
         resampling,
+        error_threshold,
         nodata: Some(f64::NAN),
         ..Default::default()
     };

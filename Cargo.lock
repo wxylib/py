@@ -494,7 +494,7 @@ dependencies = [
 [[package]]
 name = "wxy-domain"
 version = "0.0.1"
-source = "git+https://github.com/wxylib/core?rev=e9b63c00c8cce3c6e8a445ec3911781d27738929#e9b63c00c8cce3c6e8a445ec3911781d27738929"
+source = "git+https://github.com/wxylib/core?rev=0f5641ce4b2aeef4aff398b145559e8a61141ebd#0f5641ce4b2aeef4aff398b145559e8a61141ebd"
 dependencies = [
  "vaster",
 ]
@@ -515,7 +515,7 @@ dependencies = [
 [[package]]
 name = "wxy-source"
 version = "0.0.1"
-source = "git+https://github.com/wxylib/core?rev=e9b63c00c8cce3c6e8a445ec3911781d27738929#e9b63c00c8cce3c6e8a445ec3911781d27738929"
+source = "git+https://github.com/wxylib/core?rev=0f5641ce4b2aeef4aff398b145559e8a61141ebd#0f5641ce4b2aeef4aff398b145559e8a61141ebd"
 dependencies = [
  "async-trait",
  "futures",
@@ -526,7 +526,7 @@ dependencies = [
 [[package]]
 name = "wxy-warp"
 version = "0.0.1"
-source = "git+https://github.com/wxylib/core?rev=e9b63c00c8cce3c6e8a445ec3911781d27738929#e9b63c00c8cce3c6e8a445ec3911781d27738929"
+source = "git+https://github.com/wxylib/core?rev=0f5641ce4b2aeef4aff398b145559e8a61141ebd#0f5641ce4b2aeef4aff398b145559e8a61141ebd"
 dependencies = [
  "proj4rs",
  "rwarp",
