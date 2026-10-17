@@ -74,13 +74,12 @@ def test_warp_south_pole():
 
 
 def test_warp_antimeridian():
-    # an odd size puts a column of cell centres on the antimeridian; a global
-    # source wraps, so the column is filled. (The one cell exactly on the
-    # pole, lat -90, may still be NaN with nearest: it sits on the bottom
-    # edge of the source.)
+    # an odd size puts a column of cell centres on the antimeridian and one
+    # cell exactly on the pole; a global source wraps in longitude and reads
+    # its edge row at the pole, so nothing is empty
     p = wxy.warp(lat_grid(), GLOBAL, "EPSG:4326", (-5e6, 5e6, -5e6, 5e6), (101, 101), STERE)
-    assert not np.isnan(p[51:, 50]).any()
-    assert np.isnan(p).sum() <= 1
+    assert not np.isnan(p).any()
+    assert p[50, 50] == -89.5
 
 
 def test_warp_bilinear_rectangular():
@@ -103,3 +102,32 @@ def test_warp_errors():
                  resample="mode")
     with pytest.raises(ValueError):
         wxy.warp(np.ones(4), (0, 2, 0, 2), "EPSG:4326", (0, 2, 0, 2), (2, 2), "EPSG:4326")
+
+
+
+def test_warp_0_360_seam():
+    # the same data stored on 0..360 (as OISST is) and on -180..180 warp to
+    # the same south polar grid when every pixel is transformed exactly; the
+    # values encode source row and column, so any wrong pick shows
+    res, nx = 0.25, 1440
+    z = np.arange(720)[:, None] * 10000.0 + np.arange(nx)[None, :]
+    z360 = np.roll(z, -nx // 2, axis=1)
+    ext, dim = (-4e6, 4e6, -4e6, 4e6), (800, 800)
+    a = wxy.warp(z, GLOBAL, "EPSG:4326", ext, dim, STERE, error_threshold=0)
+    b = wxy.warp(z360, (0, 360, -90, 90), "EPSG:4326", ext, dim, STERE, error_threshold=0)
+    assert not np.isnan(a).any()
+    np.testing.assert_array_equal(a, b)
+
+    # under the default approximate transformer they agree to within one
+    # source cell along each seam
+    a = wxy.warp(z, GLOBAL, "EPSG:4326", ext, dim, STERE)
+    b = wxy.warp(z360, (0, 360, -90, 90), "EPSG:4326", ext, dim, STERE)
+    assert np.abs(a // 10000 - b // 10000).max() <= 1
+    dcol = (a % 10000 - b % 10000 + nx // 2) % nx - nx // 2
+    assert np.abs(dcol).max() <= 1
+
+
+def test_warp_error_threshold():
+    with pytest.raises(ValueError):
+        wxy.warp(np.ones((2, 2)), (0, 2, 0, 2), "EPSG:4326", (0, 2, 0, 2), (2, 2),
+                 "EPSG:4326", error_threshold=-1)
