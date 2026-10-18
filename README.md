@@ -72,6 +72,7 @@ pin moves.
 - xarray: no coordinates or CRS travel with the arrays yet.
 - Type stubs (`.pyi`).
 
-Design and roadmap: [wxylib/design](https://github.com/wxylib/design).
+Documentation: **https://wxylib.github.io/docs/**, one place for what works, how-tos,
+explainers, the design documents and how to help.
 
 License: MIT OR Apache-2.0.
