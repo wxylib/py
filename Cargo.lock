@@ -42,10 +42,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "crs-definitions"
-version = "0.4.0"
+name = "controlledburn"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5229c5b63bdc8e24d60e5c4b6115fbb4d11a8978661b4ecc57d6068ddb073983"
+checksum = "811c442fce690d0e5cdc7de91e3bd8f3cc89266a63316c103723a20f910afe64"
+
+[[package]]
+name = "crs-definitions"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed764c927c2a19ec1cb85deb88e93560872c04653b0e9e63fbdf6a8edf968bcb"
 
 [[package]]
 name = "futures"
@@ -276,16 +282,26 @@ dependencies = [
 
 [[package]]
 name = "proj4rs"
-version = "0.1.10"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a9a8e6a70c71f11595fa32f9128ebe56f1d986ad380db858799640a1039a0e2"
+checksum = "c237a4e4da4e0f2eae7a5d078df926894ccf1b315043dbccebc413888487d562"
 dependencies = [
  "console_log",
  "crs-definitions",
  "js-sys",
+ "proj4rs-geodesic",
  "thiserror",
  "wasm-bindgen",
  "web-sys",
+]
+
+[[package]]
+name = "proj4rs-geodesic"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bdb2ff6e4d7329dc428ca2cb40f4c1ea85ef6c10aa6bd410294a1c835cd55567"
+dependencies = [
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -374,11 +390,43 @@ checksum = "cf54715a573b99ac80df0bc206da022bcd442c974952c7b9720069370852e21f"
 
 [[package]]
 name = "rwarp"
-version = "0.1.2"
-source = "git+https://github.com/hypertidy/rwarp?rev=20572c396307f71659508eda0411ee31e9d127c8#20572c396307f71659508eda0411ee31e9d127c8"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b8a597dd05caa25142adafa9760b8fde9b8ca97fbc5d04e847175734783a9bcd"
 dependencies = [
+ "controlledburn",
  "proj4rs",
  "vaster",
+]
+
+[[package]]
+name = "serde"
+version = "1.0.229"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4148590afebada386688f18773da617792bf2ef03ffc1e4cbd2b1d45b023e0ba"
+dependencies = [
+ "serde_core",
+ "serde_derive",
+]
+
+[[package]]
+name = "serde_core"
+version = "1.0.229"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "67dca2c9c51e58a4791a4b1ed58308b39c64224d349a935ab5039aa360942a48"
+dependencies = [
+ "serde_derive",
+]
+
+[[package]]
+name = "serde_derive"
+version = "1.0.229"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e7a5d71263a5a7d47b41f6b3f06ba276f10cc18b0931f1799f710578e2309348"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -494,7 +542,7 @@ dependencies = [
 [[package]]
 name = "wxy-domain"
 version = "0.0.1"
-source = "git+https://github.com/wxylib/core?rev=39b07bba423e99a361ea0f02b0ed3e45521f2b1a#39b07bba423e99a361ea0f02b0ed3e45521f2b1a"
+source = "git+https://github.com/wxylib/core?rev=caba7b2ff19cc97dde505eed6fae6145ef9692aa#caba7b2ff19cc97dde505eed6fae6145ef9692aa"
 dependencies = [
  "vaster",
 ]
@@ -513,14 +561,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "wxy-resample"
-version = "0.0.1"
-source = "git+https://github.com/wxylib/core?rev=39b07bba423e99a361ea0f02b0ed3e45521f2b1a#39b07bba423e99a361ea0f02b0ed3e45521f2b1a"
-
-[[package]]
 name = "wxy-source"
 version = "0.0.1"
-source = "git+https://github.com/wxylib/core?rev=39b07bba423e99a361ea0f02b0ed3e45521f2b1a#39b07bba423e99a361ea0f02b0ed3e45521f2b1a"
+source = "git+https://github.com/wxylib/core?rev=caba7b2ff19cc97dde505eed6fae6145ef9692aa#caba7b2ff19cc97dde505eed6fae6145ef9692aa"
 dependencies = [
  "async-trait",
  "futures",
@@ -531,11 +574,12 @@ dependencies = [
 [[package]]
 name = "wxy-warp"
 version = "0.0.1"
-source = "git+https://github.com/wxylib/core?rev=39b07bba423e99a361ea0f02b0ed3e45521f2b1a#39b07bba423e99a361ea0f02b0ed3e45521f2b1a"
+source = "git+https://github.com/wxylib/core?rev=caba7b2ff19cc97dde505eed6fae6145ef9692aa#caba7b2ff19cc97dde505eed6fae6145ef9692aa"
 dependencies = [
+ "controlledburn",
  "proj4rs",
  "rwarp",
+ "serde",
  "wxy-domain",
- "wxy-resample",
  "wxy-source",
 ]
