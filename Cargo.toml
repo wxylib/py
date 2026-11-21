@@ -12,9 +12,9 @@ crate-type = ["cdylib"]
 pyo3 = { version = "0.30", features = ["extension-module", "abi3-py39"] }
 numpy = "0.30"
 # Pinned to a wxylib/core commit so the bindings move only when we say so.
-wxy-domain = { git = "https://github.com/wxylib/core", rev = "caba7b2ff19cc97dde505eed6fae6145ef9692aa" }
-wxy-source = { git = "https://github.com/wxylib/core", rev = "caba7b2ff19cc97dde505eed6fae6145ef9692aa" }
-wxy-warp = { git = "https://github.com/wxylib/core", rev = "caba7b2ff19cc97dde505eed6fae6145ef9692aa" }
+wxy-domain = { git = "https://github.com/wxylib/core", rev = "15bab9ed7ff6549d36239d08ea51b58c35374236" }
+wxy-source = { git = "https://github.com/wxylib/core", rev = "15bab9ed7ff6549d36239d08ea51b58c35374236" }
+wxy-warp = { git = "https://github.com/wxylib/core", rev = "15bab9ed7ff6549d36239d08ea51b58c35374236" }
 async-trait = "0.1.89"
 futures = { version = "0.3.31", default-features = false, features = ["executor"] }
 
